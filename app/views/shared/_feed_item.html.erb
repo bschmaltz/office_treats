@@ -1,11 +1,49 @@
 <li id="<%= feed_item.id %>">
-  <%= link_to gravatar_for(feed_item.user), feed_item.user %>
+    <% post_upvoted = false %>
+    <% post_downvoted = false %>
+    <% @arr_ups.each do |i| %>
+      <% if i==feed_item.id %>
+        <% post_upvoted=true %>
+        <% break %>
+      <% end %>
+    <% end %>
+    <% if !post_upvoted %>
+      <% @arr_downs.each do |i| %>
+        <% if i==feed_item.id %>
+          <% post_downvoted=true %>
+          <% break %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <span class="rating">
+      <% if feed_item.user.id == current_user.id %>
+        <b>+</b></br>
+        <%= feed_item.rating %></br>
+        -
+      <% else %>
+        <% if !post_upvoted && !post_downvoted %>
+          <%= link_to "+", up_path(:postID => feed_item) %></br>
+          <%= feed_item.rating %></br>
+          <%= link_to "-", down_path(:postID => feed_item) %>
+        <% end %>
+        <% if post_upvoted %>
+          <b>+</b></br>
+          <%= feed_item.rating %></br>
+          <%= link_to "-", switch_to_down_path(:postID => feed_item) %>
+        <% end %>
+        <% if post_downvoted %>
+          <%= link_to "+", switch_to_up_path(:postID => feed_item) %></br>
+          <%= feed_item.rating %></br>
+          <b>-</b>
+        <% end %>
+      <% end %>
+    </span>
+    <%= link_to gravatar_for(feed_item.user), feed_item.user %>
     <span class="user">
       <%= link_to feed_item.user.name, feed_item.user %>
     </span>
     <span class="content">
       <%= feed_item.content %>
-      <%= image_tag feed_item.image_url(:thumb) if feed_item.image? %>
     </span>
     <span class="timestamp">
       Posted <%= time_ago_in_words(feed_item.created_at) %> ago.

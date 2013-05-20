@@ -4,7 +4,14 @@ OfficeTreats::Application.routes.draw do
   resources :microposts, only: [:create, :destroy]
 
   root to: 'static_pages#home'
-  
+  match "/home_top" => "static_pages#home_top"
+  match "/home_old" => "static_pages#home_old"
+
+  match "/up" => "microposts#up"
+  match "/down" => "microposts#down"
+  match "/switch_to_up" => "microposts#switch_to_up"
+  match "/switch_to_down" => "microposts#switch_to_down"
+
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete

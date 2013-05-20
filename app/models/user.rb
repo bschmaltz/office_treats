@@ -10,7 +10,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmation, :upvoted, :downvoted
   has_secure_password
   has_many :microposts, dependent: :destroy
 
@@ -25,9 +25,16 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
 
-  def feed
+  def feed(r=0)
     # This is preliminary. See "Following users" for the full implementation.
-    Micropost.where("user_id > 0", id)
+    if(r==0)
+      Micropost.order('created_at DESC')
+    elsif(r==1)
+      Micropost.order('rating DESC')
+    else
+      Micropost.order('created_at DESC')
+    end
+
   end
 
   private

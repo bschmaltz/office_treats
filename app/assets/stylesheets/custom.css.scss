@@ -195,8 +195,14 @@ input {
 
   li {
     padding: 10px 0;
+    margin-bottom: 15px;
     border-top: 1px solid #e8e8e8;
   }
+}
+.rating{
+  float:left;
+  padding-right: 10px;
+  padding-top: 10px;
 }
 .content {
   display: block;
@@ -214,3 +220,5 @@ aside {
     margin-bottom: 5px;
   }
 }
+
+

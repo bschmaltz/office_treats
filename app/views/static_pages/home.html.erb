@@ -1,4 +1,4 @@
-<% if signed_in? %>
+ <% if signed_in? %>
   <div class="row">
     <aside class="span4">
       <section>
@@ -9,7 +9,31 @@
       </section>
     </aside>
     <div class="span8">
-      <h3>New Posts | Top Post | Past Post</h3>
+      <nav>
+        <ul class="nav nav-pills">
+          <% if signed_in? %>
+            <% if @post_flag==0 %>
+              <li class="active"><%= link_to "New Posts", root_path %></li>
+            <% else %>
+              <li><%= link_to "New Posts", root_path %></li>
+            <% end %>
+
+            <% if @post_flag==1 %>
+              <li class="active"><%= link_to "Top Posts", home_top_path %></li>
+            <% else %>
+              <li><%= link_to "Top Posts", home_top_path %></li>
+            <% end %>
+
+            <% if @post_flag==2 %>
+              <li class="active"><%= link_to "Old Posts", home_old_path %></li>
+            <% else %>
+              <li><%= link_to "Old Posts", home_old_path %></li>
+            <% end %>
+          <% else %>
+            <li><%= link_to "Sign in", signin_path %></li>
+          <% end %>
+        </ul>
+      </nav>
       <%= render 'shared/feed' %>
     </div>
   </div>  
