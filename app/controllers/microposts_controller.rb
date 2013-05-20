@@ -29,7 +29,7 @@ class MicropostsController < ApplicationController
       str = "[#{params[:postID].to_s},#{current_user.upvoted[1..current_user.upvoted.length-2]}]"
     end
     current_user.update_column("upvoted", str)
-    redirect_to root_url
+    redirect_to root_url(:pflag => params[:pflag])
   end
 
   def down
@@ -43,7 +43,8 @@ class MicropostsController < ApplicationController
       str = "[#{params[:postID].to_s},#{current_user.downvoted[1..current_user.downvoted.length-2]}]"
     end
     current_user.update_column("downvoted", str)
-    redirect_to root_url
+    redirect_to root_url(:pflag => params[:pflag])
+
   end
 
   def switch_to_up
@@ -63,7 +64,7 @@ class MicropostsController < ApplicationController
 
     current_user.update_column("upvoted", ups.to_s)
     current_user.update_column("downvoted", downs.to_s)
-    redirect_to root_url
+    redirect_to root_url(:pflag => params[:pflag])
   end
 
   def switch_to_down
@@ -83,7 +84,7 @@ class MicropostsController < ApplicationController
 
     current_user.update_column("upvoted", ups.to_s)
     current_user.update_column("downvoted", downs.to_s)
-    redirect_to root_url
+    redirect_to root_url(:pflag => params[:pflag])
   end
 
   private

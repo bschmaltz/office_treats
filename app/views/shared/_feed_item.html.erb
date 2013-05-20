@@ -22,17 +22,17 @@
         -
       <% else %>
         <% if !post_upvoted && !post_downvoted %>
-          <%= link_to "+", up_path(:postID => feed_item) %></br>
+          <%= link_to "+", up_path(:postID => feed_item, :pflag => params[:pflag]) %></br>
           <%= feed_item.rating %></br>
-          <%= link_to "-", down_path(:postID => feed_item) %>
+          <%= link_to "-", down_path(:postID => feed_item, :pflag => params[:pflag]) %>
         <% end %>
         <% if post_upvoted %>
           <b>+</b></br>
           <%= feed_item.rating %></br>
-          <%= link_to "-", switch_to_down_path(:postID => feed_item) %>
+          <%= link_to "-", switch_to_down_path(:postID => feed_item, :pflag => params[:pflag]) %>
         <% end %>
         <% if post_downvoted %>
-          <%= link_to "+", switch_to_up_path(:postID => feed_item) %></br>
+          <%= link_to "+", switch_to_up_path(:postID => feed_item, :pflag => params[:pflag]) %></br>
           <%= feed_item.rating %></br>
           <b>-</b>
         <% end %>
