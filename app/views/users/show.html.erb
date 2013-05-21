@@ -9,7 +9,6 @@
     </section>
   </aside>
   <div class="span8">
-    <p><%= @user.upvoted %></p>
     <% if @user.microposts.any? %>
       <h3>Microposts (<%= @user.microposts.count %>)</h3>
       <ol class="microposts">

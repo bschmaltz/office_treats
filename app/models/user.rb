@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
     elsif(r==1)
       Micropost.order('rating DESC')
     else
-      Micropost.order('created_at DESC')
+      Micropost.order('created_at ASC')
     end
 
   end
