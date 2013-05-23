@@ -1,3 +1,8 @@
 <li class="a_comment">
-	<%= comment.content %>
+	<%= link_to comment.user.name, comment.user %>: <%= comment.text %>
+	<% if current_user?(comment.user) %>
+            <%= link_to image_tag("delete_static.png", :class => "delete_comment_img"), comment, method: :delete,
+                                             data: { confirm: "You sure?" },
+                                             title: comment.text, class: "delete_comment" %>
+    <% end %>
 </li>

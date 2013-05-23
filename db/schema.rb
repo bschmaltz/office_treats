@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20130521165428) do
 
   create_table "comments", :force => true do |t|
-    t.string   "content"
+    t.string   "text"
     t.integer  "user_id"
     t.integer  "micropost_id"
     t.datetime "created_at",   :null => false

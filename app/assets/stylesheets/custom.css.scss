@@ -179,7 +179,7 @@ input {
   margin: 0;
   li {
     overflow: auto;
-    padding: 10px 0;
+    padding: 0px 0;
     border-top: 1px solid $grayLighter;
     &:last-child {
       border-bottom: 1px solid $grayLighter;
@@ -189,17 +189,28 @@ input {
 
 /* microposts */
 
+  ul{
+    margin: 0px;
+  }
+  ol {
+    margin: 0px;
+  }
 .microposts {
   list-style: none;
 
   li {
+    margin: 0px;
     display: block;
     height: auto;
     padding-bottom: 10px;
   }
 }
 .item{
-  width: 600px;
+  width: 620px;
+  height: 105px;
+  &:hover {
+    background-color: #f8f8f8;
+  }
 }
 .item_without_comments{
   display: block;
@@ -207,7 +218,9 @@ input {
 }
 .item_left{
 }
+.replies{
 
+}
 .item_right{
   float: left;
 }
@@ -237,7 +250,6 @@ input {
 }
 .timestamp {
   color: $grayLight;
-  margin-bottom: 10px;
 }
 .post_info{
   display: block;
@@ -258,7 +270,7 @@ aside {
   list-style: none;
   float: left;
   position: relative;
-  margin-left: 120px;
+  padding-left: 120px;
   width: 480px;
   text-align: left;
 }
@@ -267,5 +279,10 @@ aside {
   border-top: 1px solid #e8e8e8;
 }
 
-
-
+.delete_comment{
+  display: block;
+  height: 15px;
+  width: 15px;
+  float: right;
+  float: top;
+}
