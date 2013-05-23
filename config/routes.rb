@@ -2,6 +2,7 @@ OfficeTreats::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
 
   root to: 'static_pages#home'
   match "/home_top" => "static_pages#home_top"

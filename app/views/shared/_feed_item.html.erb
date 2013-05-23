@@ -1,4 +1,6 @@
-<li id="<%= feed_item.id %>">
+<div class="item">
+  <li id="<%= feed_item.id %>">
+
     <% post_upvoted = false %>
     <% post_downvoted = false %>
     <% @arr_ups.each do |i| %>
@@ -15,43 +17,74 @@
         <% end %>
       <% end %>
     <% end %>
-    <span class="rating">
-      <% if feed_item.user.id == current_user.id %>
-        <b>+</b></br>
-        <%= feed_item.rating %></br>
-        -
-      <% else %>
-        <% if !post_upvoted && !post_downvoted %>
-          <%= link_to "+", up_path(:postID => feed_item, :pflag => params[:pflag]) %></br>
-          <%= feed_item.rating %></br>
-          <%= link_to "-", down_path(:postID => feed_item, :pflag => params[:pflag]) %>
-        <% end %>
-        <% if post_upvoted %>
-          <b>+</b></br>
-          <%= feed_item.rating %></br>
-          <%= link_to "-", switch_to_down_path(:postID => feed_item, :pflag => params[:pflag]) %>
-        <% end %>
-        <% if post_downvoted %>
-          <%= link_to "+", switch_to_up_path(:postID => feed_item, :pflag => params[:pflag]) %></br>
-          <%= feed_item.rating %></br>
-          <b>-</b>
-        <% end %>
-      <% end %>
+
+    <span class="item_without_comments">
+      <span class="item_left">
+        <span class="rating">
+          <% if feed_item.user.id == current_user.id %>
+            <b>+</b></br>
+            <%= feed_item.rating %></br>
+            -
+          <% else %>
+            <% if !post_upvoted && !post_downvoted %>
+              <%= link_to "+", up_path(:postID => feed_item, :pflag => params[:pflag]) %></br>
+              <%= feed_item.rating %></br>
+              <%= link_to "-", down_path(:postID => feed_item, :pflag => params[:pflag]) %>
+            <% end %>
+            <% if post_upvoted %>
+              <b>+</b></br>
+              <%= feed_item.rating %></br>
+              <%= link_to "-", switch_to_down_path(:postID => feed_item, :pflag => params[:pflag]) %>
+            <% end %>
+            <% if post_downvoted %>
+              <%= link_to "+", switch_to_up_path(:postID => feed_item, :pflag => params[:pflag]) %></br>
+              <%= feed_item.rating %></br>
+              <b>-</b>
+            <% end %>
+          <% end %>
+        </span>
+        <%= link_to gravatar_for(feed_item.user), feed_item.user %>
+      </span>
+      <span clase="item_right">
+        <span class="user">
+          <%= link_to feed_item.user.name, feed_item.user %>
+        </span>
+        <span class="content">
+          <span class="content_text">
+          <%= feed_item.content %>
+          </span>
+          <%= image_tag feed_item.image_url, class: "content_image" if feed_item.image? %>
+        </span>
+        <span class="post_info">
+          <span class="timestamp">
+            Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
+          </span>
+          <% if current_user?(feed_item.user) %>
+            <%= link_to "delete", feed_item, method: :delete,
+                                             data: { confirm: "You sure?" },
+                                             title: feed_item.content, class: "delete" %>
+          <% end %>
+        </span>
+      </span>
     </span>
-    <%= link_to gravatar_for(feed_item.user), feed_item.user %>
-    <span class="user">
-      <%= link_to feed_item.user.name, feed_item.user %>
-    </span>
-    <span class="content">
-      <%= feed_item.content %></br>
-      <%= image_tag feed_item.image_url, class: "content_image" if feed_item.image? %>
-    </span>
-    <span class="timestamp">
-      Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
-    </span>
-  <% if current_user?(feed_item.user) %>
-    <%= link_to "delete", feed_item, method: :delete,
-                                     data: { confirm: "You sure?" },
-                                     title: feed_item.content %>
-  <% end %>
-</li>
+        <div class="comments_section">
+          <%= form_for(Comment.new) do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
+            <div class="field">
+              <span class="comment_input">
+              <%= f.text_field :content, placeholder: "Comment..." %>
+              </span>
+              <%= f.hidden_field :micropost_id, :value => feed_item.id %>
+            </div>
+            <%= f.submit "Post", class: "btn comment_post_btn" %>
+          <% end %>
+          <div class="comments">
+            <% if @comments!=nil %>
+              <ol class="replies">
+                <%= render partial: 'shared/comment', collection: @comments.where(:micropost_id => feed_item.id) %>
+              </ol>
+            <% end %>
+          </div>
+        </div><br />
+  </li>
+</div>

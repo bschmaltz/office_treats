@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :upvoted, :downvoted
   has_secure_password
   has_many :microposts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
@@ -35,6 +36,10 @@ class User < ActiveRecord::Base
       Micropost.order('created_at ASC')
     end
 
+  end
+
+  def comment_feed()
+      Comment.order('created_at DESC')
   end
 
   private

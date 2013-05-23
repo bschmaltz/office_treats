@@ -9,8 +9,8 @@ class StaticPagesController < ApplicationController
       else
         @feed_items = current_user.feed(2).paginate(page: params[:page])
       end
-        
-      
+
+      @comments = current_user.comment_feed
       
       @arr_ups = Array.new
       @arr_downs = Array.new

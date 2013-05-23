@@ -1,8 +1,8 @@
 class Micropost < ActiveRecord::Base
   attr_accessible :content, :name, :image, :remote_image_url, :rating
   belongs_to :user
+  has_many :comments, dependent: :destroy
 
-  #validate :both_image_inputs_not_filled
   mount_uploader :image, ImageUploader
 
   
@@ -10,10 +10,6 @@ class Micropost < ActiveRecord::Base
   validates :content, presence: true, length: { maximum: 140 }
   validates :user_id, presence: true 
   
-  #def both_image_inputs_not_filled
-  	#if (!self.image.blank? && !self.remote_image_url.blank? )
-  		#errors.add(:image, "file and url cannot both be filled")
-  	#end
-  #end
+  
 
 end
